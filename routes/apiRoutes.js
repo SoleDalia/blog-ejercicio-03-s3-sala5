@@ -10,10 +10,13 @@ const {
   createUser,
 } = require("../controllers/apiController/apiUserController");
 
-apiRouter.get("/articles", getAllArticles);
+// articles routes
+apiRouter.get("/articles", getAllArticles); //trae todos los articulos
+apiRouter.get("/articles/:text", getAllArticles); //trae articulos por palabras claves
+apiRouter.get("/articles/find/:userId", getAllArticles); //trae articulos por usuario
+apiRouter.get("/articles/:id", getOneArticle); //trae por usuario
 
-apiRouter.get("/articles/:id", getOneArticle);
-
+// user routes
 apiRouter.get("/users", getAllUsers);
 // apiRouter.get("/users/:id", (req, res) => {});
 apiRouter.post("/users", createUser);

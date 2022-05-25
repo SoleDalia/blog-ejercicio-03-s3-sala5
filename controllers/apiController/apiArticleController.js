@@ -1,7 +1,19 @@
 const { Article } = require("../../models");
+const { Op } = require("sequelize");
 
 const getAllArticles = async function (req, res) {
-  const articles = await Article.findAll();
+  let options = {
+    order: [["createdAt", "ASC"]],
+  };
+  if (req.params.text) {
+    options.where = { title: { [Op.like]: `%${req.params.text}%` } };
+  }
+
+  if (req.params.userId) {
+    options.where = { userId: req.params.userId };
+  }
+
+  const articles = await Article.findAll(options);
   res.json(articles);
 };
 

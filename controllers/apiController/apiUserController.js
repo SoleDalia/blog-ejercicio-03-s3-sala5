@@ -1,4 +1,5 @@
 const { User } = require("../../models");
+const bcrypt = require("bcryptjs");
 
 const getAllUsers = async function (req, res) {
   const users = await User.findAll();
@@ -7,10 +8,11 @@ const getAllUsers = async function (req, res) {
 
 const createUser = async function (req, res) {
   const user = await User.create({
-    name: req.body.name,
+    firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
-    roleId: req.body.roleId,
+    password: await bcrypt.hash(req.body.password, 10), //req.body.password = password que puso el user
+    roleId: 2,
   });
 
   res.json(user);
